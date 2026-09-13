@@ -45,13 +45,6 @@ export const FeatureSection: React.FC<FeatureSectionProps> = () => {
     <section id="what-sets-prive-apart" className="py-14 sm:py-22 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto transition-colors duration-300">
       {/* Editorial Header Block */}
       <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16">
-        <div className={`text-xs font-semibold tracking-wider uppercase mb-3 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full ${
-          isLight ? 'bg-[#f0e7d8] text-[#9c7d49]' : 'bg-[#221c15] text-[#d4aa73]'
-        }`}>
-          <Compass className="w-3.5 h-3.5" />
-          <span>The Dandeli Tours Promise</span>
-        </div>
-
         <h2 className={`font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight ${
           isLight ? 'text-[#1c1917]' : 'text-[#f6f2ec]'
         }`}>

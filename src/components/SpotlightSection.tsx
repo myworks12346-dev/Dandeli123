@@ -100,11 +100,6 @@ export const SpotlightSection: React.FC<SpotlightSectionProps> = ({ items }) => 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase mb-3 border bg-[#b8854c]/10 border-[#b8854c]/30 text-[#b8854c]">
-            <Sparkles className="w-3 h-3" />
-            <span>Experiences Worth Remembering</span>
-          </div>
-
           <h2 className={`font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal leading-tight tracking-tight ${
             isLight ? 'text-[#1c1917]' : 'text-[#f5f1eb]'
           }`}>

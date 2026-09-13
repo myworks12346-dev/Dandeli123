@@ -127,16 +127,6 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
               {/* Dynamic Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10 group-hover:via-black/40 transition-colors" />
 
-              {/* Tag / Location Pill Top Left */}
-              <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5 z-10">
-                {exp.tag && (
-                  <span className="bg-black/60 backdrop-blur-md border border-white/20 text-[#ffdf99] text-[10px] sm:text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
-                    <Sparkles className="w-2.5 h-2.5 text-[#ffd074]" />
-                    {exp.tag}
-                  </span>
-                )}
-              </div>
-
               {/* Expand Icon Button Top Right */}
               <div className="absolute top-3.5 right-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                 <div className="p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white hover:text-[#c8a974] hover:bg-black/80">
