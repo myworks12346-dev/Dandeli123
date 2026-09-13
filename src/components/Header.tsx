@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Menu, X, Sun, Moon } from 'lucide-react';
+import { Phone, Menu, X, Sun, Moon, ChevronDown, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage, SUPPORTED_LANGUAGES, LanguageCode } from '../context/LanguageContext';
 
 interface HeaderProps {
   onOpenAuth: () => void;
@@ -13,11 +14,12 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuth,
   onOpenPartner,
   onOpenSupport,
-  onOpenManagerDashboard,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme, isLight } = useTheme();
+  const [isMenuLangOpen, setIsMenuLangOpen] = useState(false);
+  const { toggleTheme, isLight } = useTheme();
+  const { language, setLanguage, currentLanguageOption, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +28,11 @@ export const Header: React.FC<HeaderProps> = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSelectLanguage = (code: LanguageCode) => {
+    setLanguage(code);
+    setIsMenuLangOpen(false);
+  };
 
   return (
     <>
@@ -68,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Desktop Navigation Links */}
           <nav
-            className={`hidden lg:flex items-center gap-6 text-[12px] font-normal tracking-wide transition-colors ${
+            className={`hidden lg:flex items-center gap-5 xl:gap-6 text-[12px] font-normal tracking-wide transition-colors ${
               isScrolled && isLight ? 'text-[#423d36]' : 'text-[#d8d2c7]'
             }`}
           >
@@ -83,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Phone className="w-3.5 h-3.5 text-[#c9a66b]" />
               <span>
-                Call to Book{' '}
+                {t('callToBook')}{' '}
                 <strong
                   className={`font-semibold ${
                     isScrolled && isLight ? 'text-[#1c1917]' : 'text-white'
@@ -101,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
                 isScrolled && isLight ? 'hover:text-[#9c7d49]' : 'hover:text-[#c9a66b]'
               }`}
             >
-              Partner with Us
+              {t('partnerWithUs')}
             </button>
 
             <button
@@ -111,17 +118,17 @@ export const Header: React.FC<HeaderProps> = ({
                 isScrolled && isLight ? 'hover:text-[#9c7d49]' : 'hover:text-[#c9a66b]'
               }`}
             >
-              Customer support
+              {t('customerSupport')}
             </button>
 
             <a
-              id="header-visit-elivaas"
-              href="#the-prive-selection"
+              id="header-visit-packages"
+              href="#the-dandeli-collection"
               className={`transition-colors ${
                 isScrolled && isLight ? 'hover:text-[#9c7d49]' : 'hover:text-[#c9a66b]'
               }`}
             >
-              Visit ELIVAAS
+              {t('visitPackages')}
             </a>
 
             {/* Theme Toggle Button (Desktop) */}
@@ -142,18 +149,18 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="header-login-btn"
               onClick={onOpenAuth}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 cursor-pointer shadow-sm ${
+              className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap ${
                 isScrolled && isLight
                   ? 'border border-[#9c7d49] text-[#1c1917] hover:bg-[#9c7d49] hover:text-white'
                   : 'border border-[#b89a62] text-[#f2ede4] hover:bg-[#b89a62] hover:text-[#0f0e0c]'
               }`}
             >
-              Log In / Sign Up
+              {t('logInSignUp')}
             </button>
           </nav>
 
-          {/* Mobile Right Controls */}
-          <div className="flex lg:hidden items-center gap-1.5 ml-auto">
+          {/* Mobile Right Controls - Clean and Uncluttered */}
+          <div className="flex lg:hidden items-center gap-2 ml-auto">
             {/* Quick Mobile Theme Toggle */}
             <button
               id="mobile-theme-toggle"
@@ -172,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({
               id="mobile-menu-toggle"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open mobile menu"
-              className={`p-2 focus:outline-none ${
+              className={`p-2 focus:outline-none cursor-pointer ${
                 isScrolled && isLight
                   ? 'text-[#211e1b] hover:text-[#9c7d49]'
                   : 'text-[#e8e4dc] hover:text-[#c9a66b]'
@@ -188,161 +195,249 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-menu-drawer"
-          className={`fixed inset-0 z-50 backdrop-blur-xl flex flex-col justify-between p-6 animate-fadeIn ${
+          className={`fixed inset-0 z-50 backdrop-blur-xl flex flex-col justify-between p-6 animate-fadeIn overflow-y-auto ${
             isLight ? 'bg-[#faf8f5]/95 text-[#211e1b]' : 'bg-[#0d0c0b]/95 text-[#e8e4dc]'
           }`}
         >
-          <div
-            className={`flex items-center justify-between border-b pb-4 ${
-              isLight ? 'border-[#e4dcd0]' : 'border-[#2a2620]'
-            }`}
-          >
+          <div>
+            {/* Menu Header with Logo and Close Button */}
             <div
-              className={`border px-3 py-1.5 rounded-sm flex flex-col items-center ${
-                isLight ? 'border-[#9c7d49]/80 bg-white' : 'border-[#bfa068]/80 bg-[#12100d]'
+              className={`flex items-center justify-between border-b pb-4 ${
+                isLight ? 'border-[#e4dcd0]' : 'border-[#2a2620]'
               }`}
             >
-              <span
-                className={`font-serif text-xs tracking-[0.22em] font-semibold uppercase leading-none ${
-                  isLight ? 'text-[#1c1917]' : 'text-[#f0e8dc]'
-                }`}
-              >
-                Dandile
-              </span>
-              <span className="font-serif italic text-[10px] text-[#c9a66b] tracking-wider leading-tight">
-                tours
-              </span>
-            </div>
-            <button
-              id="close-mobile-menu"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`p-2 ${isLight ? 'text-[#615a51] hover:text-black' : 'text-[#b0a89d] hover:text-white'}`}
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-4 py-4 text-base tracking-wide">
-            <a
-              href="tel:+919175357845"
-              className={`flex items-center gap-3 text-[#c9a66b] py-2 border-b ${
-                isLight ? 'border-[#eee8de]' : 'border-[#1f1b16]'
-              }`}
-            >
-              <Phone className="w-4 h-4" />
-              <span>Call +91 9175357845</span>
-            </a>
-            <a
-              href="#the-prive-selection"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              The Privé Selection
-            </a>
-            <a
-              href="#what-sets-prive-apart"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              What Sets Privé Apart
-            </a>
-            <a
-              href="#spring-symphony"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              Spring Symphony
-            </a>
-            <a
-              href="#prive-experiences"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              The Privé Experiences
-            </a>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenPartner();
-              }}
-              className={`text-left py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              Partner with Us
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenSupport();
-              }}
-              className={`text-left py-2 border-b transition-colors ${
-                isLight
-                  ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
-                  : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
-              }`}
-            >
-              Customer Support
-            </button>
-
-            {/* Mobile Theme Switcher Row */}
-            <div
-              className={`flex items-center justify-between py-2 border-b ${
-                isLight ? 'border-[#eee8de]' : 'border-[#1f1b16]'
-              }`}
-            >
-              <span className="text-sm">Appearance</span>
               <div
-                className={`flex items-center p-1 rounded-full border ${
-                  isLight ? 'bg-[#eee8de] border-[#dfd5c6]' : 'bg-[#1a1714] border-[#2f2922]'
+                className={`border px-3 py-1.5 rounded-sm flex flex-col items-center ${
+                  isLight ? 'border-[#9c7d49]/80 bg-white' : 'border-[#bfa068]/80 bg-[#12100d]'
                 }`}
               >
-                <button
-                  onClick={() => toggleTheme()}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                    !isLight
-                      ? 'bg-[#b89a62] text-black shadow-sm'
-                      : 'text-[#6d665c]'
+                <span
+                  className={`font-serif text-xs tracking-[0.22em] font-semibold uppercase leading-none ${
+                    isLight ? 'text-[#1c1917]' : 'text-[#f0e8dc]'
                   }`}
                 >
-                  <Moon className="w-3 h-3" />
-                  <span>Dark</span>
-                </button>
+                  Dandile
+                </span>
+                <span className="font-serif italic text-[10px] text-[#c9a66b] tracking-wider leading-tight">
+                  tours
+                </span>
+              </div>
+              <button
+                id="close-mobile-menu"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-2 cursor-pointer ${isLight ? 'text-[#615a51] hover:text-black' : 'text-[#b0a89d] hover:text-white'}`}
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Compact Language Selector Section Integrated Near Top */}
+            <div className={`py-3.5 border-b ${isLight ? 'border-[#e4dcd0]' : 'border-[#2a2620]'}`}>
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#b8854c] leading-tight break-words">
+                  LANGUAGE / INTERNATIONAL GUESTS
+                </span>
+
+                {/* Compact Current Selection Button */}
                 <button
-                  onClick={() => toggleTheme()}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                    isLight
-                      ? 'bg-[#9c7d49] text-white shadow-sm'
-                      : 'text-[#9e9487]'
+                  id="menu-language-selector-btn"
+                  onClick={() => setIsMenuLangOpen(!isMenuLangOpen)}
+                  aria-expanded={isMenuLangOpen}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+                    isMenuLangOpen
+                      ? 'border-[#b8854c] bg-[#b8854c]/15 text-[#b8854c]'
+                      : isLight
+                        ? 'border-[#dfd5c6] bg-white text-[#211e1b] hover:bg-[#f6efe6]'
+                        : 'border-[#332b21] bg-[#16130f] text-[#ede7dc] hover:bg-[#241e17]'
                   }`}
                 >
-                  <Sun className="w-3 h-3" />
-                  <span>Light</span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-base">{currentLanguageOption.flag}</span>
+                    <div className="text-left flex items-center gap-1.5">
+                      <span className="font-semibold">{currentLanguageOption.nativeName}</span>
+                      {currentLanguageOption.nativeName !== currentLanguageOption.label && (
+                        <span className={`text-[11px] ${isLight ? 'text-[#7d7364]' : 'text-[#9c9384]'}`}>
+                          — {currentLanguageOption.label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#b8854c] transition-transform duration-200 ${
+                      isMenuLangOpen ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
+
+                {/* Expandable Language Options List */}
+                {isMenuLangOpen && (
+                  <div
+                    id="menu-language-options-list"
+                    className={`mt-1 max-h-56 overflow-y-auto rounded-xl border p-1.5 space-y-0.5 shadow-inner ${
+                      isLight ? 'bg-white/90 border-[#e4dcd0]' : 'bg-[#14100c]/95 border-[#2c241c]'
+                    }`}
+                    style={{ scrollbarWidth: 'thin' }}
+                  >
+                    {SUPPORTED_LANGUAGES.map((lang, idx) => {
+                      const isSelected = language === lang.code;
+                      const isGroupDivider = idx === 7 || idx === 12;
+
+                      return (
+                        <React.Fragment key={lang.code}>
+                          {isGroupDivider && (
+                            <div
+                              className={`my-1 border-t ${
+                                isLight ? 'border-[#ede5d8]' : 'border-[#28211a]'
+                              }`}
+                            />
+                          )}
+                          <button
+                            onClick={() => handleSelectLanguage(lang.code)}
+                            className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#b8854c]/15 text-[#b8854c] font-semibold'
+                                : isLight
+                                  ? 'hover:bg-[#f3eadc] text-[#2c261e]'
+                                  : 'hover:bg-[#221c16] text-[#ded6ca]'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <span className="text-sm">{lang.flag}</span>
+                              <div className="text-left flex items-center gap-1.5">
+                                <span className="font-medium">{lang.nativeName}</span>
+                                {lang.nativeName !== lang.label && (
+                                  <span
+                                    className={`text-[10px] ${
+                                      isLight ? 'text-[#84796a]' : 'text-[#8e8578]'
+                                    }`}
+                                  >
+                                    ({lang.label})
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            {isSelected && <Check className="w-3.5 h-3.5 text-[#b8854c]" />}
+                          </button>
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Menu Links */}
+            <div className="flex flex-col gap-2.5 py-3 text-sm tracking-wide">
+              <a
+                href="tel:+919175357845"
+                className={`flex items-center gap-3 text-[#c9a66b] py-2 border-b ${
+                  isLight ? 'border-[#eee8de]' : 'border-[#1f1b16]'
+                }`}
+              >
+                <Phone className="w-4 h-4" />
+                <span>Call +91 9175357845</span>
+              </a>
+              <a
+                href="#the-dandeli-collection"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`py-2 border-b transition-colors ${
+                  isLight
+                    ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
+                    : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
+                }`}
+              >
+                {t('visitPackages')}
+              </a>
+              <a
+                href="#what-sets-prive-apart"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`py-2 border-b transition-colors ${
+                  isLight
+                    ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
+                    : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
+                }`}
+              >
+                What Sets Us Apart
+              </a>
+              <a
+                href="#experiences-activities"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`py-2 border-b transition-colors ${
+                  isLight
+                    ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
+                    : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
+                }`}
+              >
+                River & Safari Activities
+              </a>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenPartner();
+                }}
+                className={`text-left py-2 border-b transition-colors cursor-pointer ${
+                  isLight
+                    ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
+                    : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
+                }`}
+              >
+                {t('partnerWithUs')}
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenSupport();
+                }}
+                className={`text-left py-2 border-b transition-colors cursor-pointer ${
+                  isLight
+                    ? 'text-[#211e1b] hover:text-[#9c7d49] border-[#eee8de]'
+                    : 'text-[#e8e4dc] hover:text-[#c9a66b] border-[#1f1b16]'
+                }`}
+              >
+                {t('customerSupport')}
+              </button>
+
+              {/* Mobile Theme Switcher Row */}
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  isLight ? 'border-[#eee8de]' : 'border-[#1f1b16]'
+                }`}
+              >
+                <span className="text-xs">Appearance</span>
+                <div
+                  className={`flex items-center p-1 rounded-full border ${
+                    isLight ? 'bg-[#eee8de] border-[#dfd5c6]' : 'bg-[#1a1714] border-[#2f2922]'
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleTheme()}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                      !isLight
+                        ? 'bg-[#b89a62] text-black shadow-sm'
+                        : 'text-[#6d665c]'
+                    }`}
+                  >
+                    <Moon className="w-3 h-3" />
+                    <span>Dark</span>
+                  </button>
+                  <button
+                    onClick={() => toggleTheme()}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                      isLight
+                        ? 'bg-[#9c7d49] text-white shadow-sm'
+                        : 'text-[#9e9487]'
+                    }`}
+                  >
+                    <Sun className="w-3 h-3" />
+                    <span>Light</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <div
-            className={`pt-4 border-t flex flex-col gap-3 ${
+            className={`pt-4 border-t flex flex-col gap-3 mt-auto ${
               isLight ? 'border-[#e4dcd0]' : 'border-[#2a2620]'
             }`}
           >
@@ -351,9 +446,9 @@ export const Header: React.FC<HeaderProps> = ({
                 setMobileMenuOpen(false);
                 onOpenAuth();
               }}
-              className="w-full py-3 rounded-full bg-[#b89a62] text-[#0f0e0c] font-medium text-sm tracking-wide text-center"
+              className="w-full py-3 rounded-full bg-[#b89a62] text-[#0f0e0c] font-medium text-sm tracking-wide text-center cursor-pointer shadow-md"
             >
-              Log In / Sign Up
+              {t('logInSignUp')}
             </button>
             <p className={`text-center text-xs ${isLight ? 'text-[#877e73]' : 'text-[#7d756b]'}`}>
               Where elegance is the only language

@@ -205,14 +205,6 @@ export const SpotlightSection: React.FC<SpotlightSectionProps> = ({ items }) => 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
 
-                  {/* Top Badge */}
-                  {item.badge && (
-                    <div className="absolute top-2.5 left-2.5 bg-[#b8854c]/90 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 border border-white/20">
-                      {getActivityIcon(item.id)}
-                      <span>{item.badge}</span>
-                    </div>
-                  )}
-
                   {/* Duration / Tag Overlay at Bottom */}
                   <div className="absolute bottom-2.5 left-2.5 right-2.5 flex justify-between items-center">
                     {item.duration && (

@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { BookingSearch } from './BookingSearch';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
@@ -11,6 +12,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   const { isLight } = useTheme();
+  const { t } = useLanguage();
 
   const handleExplorePackages = () => {
     const el = document.getElementById('the-dandeli-collection');
@@ -66,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
           id="hero-heading"
           className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[68px] font-normal tracking-tight sm:tracking-wide leading-[1.15] sm:leading-[1.1] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
         >
-          Escape into the wild.
+          {t('escapeIntoWild')}
         </h1>
 
         {/* Supporting Description */}
@@ -74,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
           id="hero-subtitle"
           className="mt-3.5 sm:mt-5 text-sm sm:text-base md:text-lg max-w-xl sm:max-w-2xl mx-auto leading-relaxed font-normal tracking-wide px-2 sm:px-0 text-[#e6dfd3] drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
         >
-          Adventure, rivers, wildlife and unforgettable moments in the heart of Dandeli.
+          {t('heroSubtitle')}
         </p>
 
         {/* Explore Packages CTA Button */}
@@ -84,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
             onClick={handleExplorePackages}
             className="group px-7 py-3.5 sm:px-8 sm:py-4 rounded-full bg-gradient-to-r from-[#b8854c] via-[#c9945a] to-[#d6aa75] hover:from-[#c9945a] hover:to-[#e0b885] text-white text-xs sm:text-sm font-bold tracking-wider uppercase shadow-[0_8px_25px_rgba(184,133,76,0.45)] hover:shadow-[0_12px_32px_rgba(184,133,76,0.6)] hover:scale-105 active:scale-98 transition-all duration-300 flex items-center gap-2.5 cursor-pointer border border-[#f5ddb8]/30"
           >
-            <span>Explore Packages</span>
+            <span>{t('explorePackages')}</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>

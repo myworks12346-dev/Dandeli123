@@ -41,12 +41,12 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     const handleScroll = () => {
       if (isMenuOpen) return;
       const scrollPos = window.scrollY;
-      const packagesEl = document.getElementById('the-prive-selection');
+      const packagesEl = document.getElementById('the-dandeli-collection') || document.getElementById('the-prive-selection');
       const contactEl = document.getElementById('contact-us');
 
       if (contactEl && scrollPos >= contactEl.offsetTop - 350) {
         setActiveTab('contact');
-      } else if (packagesEl && scrollPos >= packagesEl.offsetTop - 350) {
+      } else if (packagesEl && scrollPos >= packagesEl.offsetTop - 250) {
         setActiveTab('packages');
       } else {
         setActiveTab('home');
@@ -66,9 +66,15 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   const handlePackagesClick = () => {
     setActiveTab('packages');
     setIsMenuOpen(false);
-    const el = document.getElementById('the-prive-selection');
+    const el = document.getElementById('the-dandeli-collection') || document.getElementById('the-prive-selection');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 70;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth'
+      });
     }
   };
 

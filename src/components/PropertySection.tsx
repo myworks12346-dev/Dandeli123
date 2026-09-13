@@ -58,7 +58,7 @@ export const PropertySection: React.FC<PropertySectionProps> = ({
   };
 
   return (
-    <section id={id} className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto transition-colors duration-300">
+    <section id={id} className="scroll-mt-20 sm:scroll-mt-24 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto transition-colors duration-300">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-5">
         <div className="max-w-2xl">
@@ -126,14 +126,6 @@ export const PropertySection: React.FC<PropertySectionProps> = ({
 
                     {/* Subtle vignette */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
-
-                    {/* Badge top-left */}
-                    {prop.badge && (
-                      <div className="absolute top-3 left-3 bg-[#b8854c]/90 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 border border-white/20">
-                        <Sparkles className="w-3 h-3 text-[#ffecb3]" />
-                        <span>{prop.badge}</span>
-                      </div>
-                    )}
 
                     {/* Wishlist Heart top-right */}
                     <button
