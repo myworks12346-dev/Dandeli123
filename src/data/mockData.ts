@@ -357,7 +357,7 @@ export const storyItems: StoryItem[] = [
     category: 'Happiness',
     villaName: 'Villa Nimisha by ELIVAAS',
     description: 'Where time turns into lasting memories.',
-    imageUrl: 'https://res.cloudinary.com/joyorpxh/image/upload/v1788989914/863b6a52-02b4-4c75-9c62-bb01bdf5033b.png',
+    imageUrl: 'https://res.cloudinary.com/joyorpxh/image/upload/v1788991421/dandeli_resort_pool_4K_faithful.jpg',
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-luxury-resort-pool-at-sunset-41484-large.mp4'
   },
   {
@@ -384,7 +384,16 @@ export const storyItems: StoryItem[] = [
     category: 'Serenity',
     villaName: 'Palm Breeze Villa by ELIVAAS',
     description: 'An idyllic weekend wrapped in pure nature and luxury.',
-    imageUrl: 'https://res.cloudinary.com/joyorpxh/image/upload/v1788975527/ChatGPT_Image_Sep_9_2026_11_07_56_PM.png',
+    imageUrl: '/images/dandeli_kali_rafting_group.jpg',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-luxury-resort-pool-at-sunset-41484-large.mp4'
+  },
+  {
+    id: 'dandeli-pool-friends',
+    celebrity: 'Poolside Celebrations',
+    category: 'Resort Fun',
+    villaName: 'Kali River Lodge',
+    description: 'Unwinding with friends in crystal clear waters amidst the Dandeli forest.',
+    imageUrl: '/images/dandeli_pool_friends_group.jpg',
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-luxury-resort-pool-at-sunset-41484-large.mp4'
   }
 ];
