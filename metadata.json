@@ -1,0 +1,6 @@
+{
+  "name": "ELIVAAS Privé - Luxury Villa Vacation Rentals",
+  "description": "Dandeli Tours - Escape into the forests, rivers and untamed beauty of Dandeli. Where the Wild Feels Like Home.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
